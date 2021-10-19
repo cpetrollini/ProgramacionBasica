@@ -13,8 +13,8 @@ public class CuentaCorriente extends Cuenta{
 	
 	private Double descubierto;
 	
-	public CuentaCorriente(Integer cbu, Double saldo, Double descubierto) {
-		super(cbu, saldo);
+	public CuentaCorriente(Integer cbu, Double saldo, Cliente propietario, Double descubierto) {
+		super(cbu, saldo, propietario);
 		this.descubierto = descubierto;
 	}
 	

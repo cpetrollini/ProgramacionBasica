@@ -4,8 +4,8 @@ public class CuentaSueldo extends Cuenta{
 	
 	
 
-	public CuentaSueldo(Integer cbu, Double saldo) {
-		super(cbu, saldo);
+	public CuentaSueldo(Integer cbu, Double saldo, Cliente propietario) {
+		super(cbu, saldo, propietario);
 		super.setTc(TipoCuenta.Cuenta_Sueldo);
 	}
 

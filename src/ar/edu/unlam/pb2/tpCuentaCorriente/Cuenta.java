@@ -7,7 +7,7 @@ public abstract class Cuenta {
 	private Cliente propietario;
 	
 	
-	public Cuenta(Integer cbu, Double saldo) {
+	public Cuenta(Integer cbu, Double saldo, Cliente propietario) {
 		super();
 		this.cbu = cbu;
 		this.saldo = saldo;
@@ -79,6 +79,5 @@ public abstract class Cuenta {
 			return false;
 		return true;
 	}
-	
 	
 }

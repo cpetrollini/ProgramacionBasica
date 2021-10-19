@@ -9,8 +9,8 @@ public class CuentaCajaAhorro extends Cuenta {
 
 	// Las cajas de ahorro no pueden tener saldo negativo
 
-	public CuentaCajaAhorro(Integer cbu, Double saldo) {
-		super(cbu, saldo);
+	public CuentaCajaAhorro(Integer cbu, Double saldo, Cliente propietario) {
+		super(cbu, saldo, propietario);
 		// TODO Auto-generated constructor stub
 	}
 
