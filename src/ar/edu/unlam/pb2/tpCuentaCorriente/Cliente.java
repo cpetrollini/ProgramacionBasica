@@ -1,17 +1,16 @@
 package ar.edu.unlam.pb2.tpCuentaCorriente;
 
-import java.util.Arrays;
+import java.util.Set;
 
 public class Cliente {
 	private String nombre;
 	private Integer dni;
-	private Cuenta [] cuentas;
+	private Set <Cuenta> cuentas;
 	
 	public Cliente(String nombre, Integer dni) {
 		super();
 		this.nombre = nombre;
 		this.dni = dni;
-		this.cuentas = new Cuenta[10];
 	}
 
 	public String getNombre() {
@@ -30,13 +29,14 @@ public class Cliente {
 		this.dni = dni;
 	}
 
-	public Cuenta[] getCuentas() {
-		return cuentas;
+	public Set<Cuenta> getCuentas() {
+		return this.cuentas;
+	}
+	
+	public void setCuenta(Cuenta cuentaAgregar) {
+		this.cuentas.add(cuentaAgregar);
 	}
 
-	public void setCuentas(Cuenta[] cuentas) {
-		this.cuentas = cuentas;
-	}
 
 	@Override
 	public int hashCode() {

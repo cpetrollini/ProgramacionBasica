@@ -1,116 +1,88 @@
 package ar.edu.unlam.pb2.tpCuentaCorriente;
 
+import java.util.Set;
+
 public class Banco {
-	private Cliente[] clientes;
-	private Cuenta[] cuentas;
+	
+	private Set <Cliente> clientes;
+	private Set <Cuenta> cuentas;
 
 	public Banco() {
-		this.clientes = new Cliente[100];
-		this.cuentas = new Cuenta[300];
 	}
 
 	public Boolean agregarCliente(Cliente cliente) {
 		Boolean fueAgregado = false;
-		if (this.consultarSiYaFueAgregado(cliente)) {
-			for (int i = 0; i < clientes.length; i++) {
-				if (clientes[i] == null) {
-					clientes[i] = cliente;
-					fueAgregado = true;
-					break;
-				}
-			}
+		if(this.clientes.add(cliente)) {
+			fueAgregado = true;
 		}
 		return fueAgregado;
 	}
 
-	private Boolean consultarSiYaFueAgregado(Cliente aVerificar) {
-		Boolean fueAgregado = false;
-		for (int i = 0; i < clientes.length; i++) {
-			if (clientes[i] != null) {
-				if (clientes[i].getDni().equals(aVerificar.getDni())) {
-					fueAgregado = true;
-					break;
-				}
-			}
-		}
-		return fueAgregado;
-	}
+//	private Boolean consultarSiYaFueAgregado(Cliente aVerificar) {
+//		Boolean fueAgregado = false;
+//		for (int i = 0; i < clientes.length; i++) {
+//			if (clientes[i] != null) {
+//				if (clientes[i].getDni().equals(aVerificar.getDni())) {
+//					fueAgregado = true;
+//					break;
+//				}
+//			}
+//		}
+//		return fueAgregado;
+//	}
 
 	public Boolean agregarCuenta(Cuenta cuenta) {
 		Boolean fueAgregada = false;
-		if (!this.consultarSiYaFueAgregada(cuenta)) {
-			for (int i = 0; i < cuentas.length; i++) {
-				if (cuentas[i] == null) {
-					cuentas[i] = cuenta;
-					fueAgregada = true;
-					break;
-				}
-			}
+		if(this.cuentas.add(cuenta)) {
+			fueAgregada = true;
 		}
 		return fueAgregada;
 	}
 
-	private Boolean consultarSiYaFueAgregada(Cuenta cuenta) {
-		Boolean encontrada = false;
-		for (int i = 0; i < cuentas.length; i++) {
-			if (cuentas[i] != null) {
-				if (cuentas[i].getCbu().equals(cuenta.getCbu())) {
-					encontrada = true;
-					break;
-				}
-			}
-		}
-		return encontrada;
-	}
 
-	public Cuenta[] buscarCuentaDeUnClientePorDni(Integer dni) {
+	public Set<Cuenta> buscarCuentasDeUnClientePorDni(Integer dni) {
 		// devuelve el array de las cuentas de ese cliente
-		Cuenta[] cuentasDelClienteBuscado = new Cuenta[10];
-
-		for (int i = 0; i < this.clientes.length; i++) {
-			if (this.clientes[i] != null) {
-				if (this.clientes[i].getDni().equals(dni)) {
-					cuentasDelClienteBuscado = this.clientes[i].getCuentas();
-					break;
-				}
+		Set <Cuenta> cuentasDelClienteBuscado = null;
+		for (Cliente c : this.clientes) {
+			if(c.getDni().equals(dni)) {
+				cuentasDelClienteBuscado = c.getCuentas();
+				break;
 			}
 		}
 		return cuentasDelClienteBuscado;
 	}
 
-	public Double consultarSaldoCuenta(Integer cbu) {
-		Double saldoEnLaCuenta = 0.0;
-		// como solo se podia acceder a la cuenta a traves del cliente. primero debi
-		// iterar en la lista
-		// de clientes para en cada una iterar en su lista de cuenta spara comparar el
-		// cbu de la cuenta con el
-		// cbu pasado x parametro
-		for (int i = 0; i < clientes.length; i++) {
-			if (this.clientes[i] != null) {
-				for (int j = 0; j < clientes[i].getCuentas().length; j++) {
-					if (clientes[i].getCuentas()[j] != null) {
-						if (clientes[i].getCuentas()[j].getCbu().equals(cbu)) {
-							saldoEnLaCuenta = clientes[i].getCuentas()[j].getSaldo();
-							break;
-						}
-					}
-				}
-			}
-		}
-		return saldoEnLaCuenta;
-	}
+//	public Double consultarSaldoCuenta(Integer cbu) {
+//		Double saldoEnLaCuenta = 0.0;
+//		// como solo se podia acceder a la cuenta a traves del cliente. primero debi
+//		// iterar en la lista
+//		// de clientes para en cada una iterar en su lista de cuenta spara comparar el
+//		// cbu de la cuenta con el
+//		// cbu pasado x parametro
+//		for (int i = 0; i < clientes.length; i++) {
+//			if (this.clientes[i] != null) {
+//				for (int j = 0; j < clientes[i].getCuentas().length; j++) {
+//					if (clientes[i].getCuentas()[j] != null) {
+//						if (clientes[i].getCuentas()[j].getCbu().equals(cbu)) {
+//							saldoEnLaCuenta = clientes[i].getCuentas()[j].getSaldo();
+//							break;
+//						}
+//					}
+//				}
+//			}
+//		}
+//		return saldoEnLaCuenta;
+//	}
 
 	public Double consultarSaldoCuentaConMapeo(Integer cbu) {
 		// accedo al mismo dato pero desde el array de cuentas, ya que ahora cada cuenta
 		// posee el dato del
 		// Cliente propietario
 		Double saldoEnLaCuenta = 0.0;
-		for (int i = 0; i < cuentas.length; i++) {
-			if (this.cuentas[i] != null) {
-				if (this.cuentas[i].getCbu().equals(cbu)) {
-					saldoEnLaCuenta = this.cuentas[i].getSaldo();
-					break;
-				}
+		for (Cuenta cuenta : this.cuentas) {
+			if(cuenta.getCbu().equals(cbu)) {
+				saldoEnLaCuenta = cuenta.getSaldo();
+				break;
 			}
 		}
 		return saldoEnLaCuenta;
