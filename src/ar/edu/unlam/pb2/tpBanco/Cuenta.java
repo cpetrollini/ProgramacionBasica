@@ -1,18 +1,30 @@
-package ar.edu.unlam.pb2.tpCuentaCorriente;
+package ar.edu.unlam.pb2.tpBanco;
 
-public abstract class Cuenta {
+public abstract class Cuenta implements Comparable<Cuenta>{
 	private TipoCuenta tc;
+	private static Integer CBU_SIGUIENTE = 1;
 	private Integer cbu;
 	private Double saldo;
 	private Cliente propietario;
 	
 	
-	public Cuenta(Integer cbu, Double saldo, Cliente propietario) {
+	public Cuenta(Cliente propietario, Banco bancoAlQuePertenece) {
 		super();
-		this.cbu = cbu;
-		this.saldo = saldo;
+		this.saldo = 0.0;
+		this.propietario = propietario;
+		this.cbu = CBU_SIGUIENTE;
+		CBU_SIGUIENTE++;
+		this.propietario.setCuenta(this);
 	}
 
+	public int compareTo(Cuenta aComparar) {
+		return this.getCbu().compareTo(aComparar.getCbu());
+	}
+	
+	public int compareTo(Integer cbu) {
+		return this.getCbu().compareTo(cbu);
+	}
+	
 	//todas las cuentas van a saber extraer
 	//con el abstract estan obligadas a sobreescribir el metodo
 	

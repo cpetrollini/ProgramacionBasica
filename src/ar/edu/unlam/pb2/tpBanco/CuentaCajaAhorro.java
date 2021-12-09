@@ -1,4 +1,4 @@
-package ar.edu.unlam.pb2.tpCuentaCorriente;
+package ar.edu.unlam.pb2.tpBanco;
 
 public class CuentaCajaAhorro extends Cuenta {
 
@@ -9,8 +9,8 @@ public class CuentaCajaAhorro extends Cuenta {
 
 	// Las cajas de ahorro no pueden tener saldo negativo
 
-	public CuentaCajaAhorro(Integer cbu, Double saldo, Cliente propietario) {
-		super(cbu, saldo, propietario);
+	public CuentaCajaAhorro(Cliente propietario, Banco banco) {
+		super(propietario, banco);
 		// TODO Auto-generated constructor stub
 	}
 

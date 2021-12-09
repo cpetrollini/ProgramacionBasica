@@ -1,5 +1,6 @@
-package ar.edu.unlam.pb2.tpCuentaCorriente;
+package ar.edu.unlam.pb2.tpBanco;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Cliente {
@@ -9,6 +10,7 @@ public class Cliente {
 	
 	public Cliente(String nombre, Integer dni) {
 		super();
+		this.cuentas = new HashSet<Cuenta>();
 		this.nombre = nombre;
 		this.dni = dni;
 	}

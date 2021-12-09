@@ -1,11 +1,9 @@
-package ar.edu.unlam.pb2.tpCuentaCorriente;
+package ar.edu.unlam.pb2.tpBanco;
 
 public class CuentaSueldo extends Cuenta{
-	
-	
 
-	public CuentaSueldo(Integer cbu, Double saldo, Cliente propietario) {
-		super(cbu, saldo, propietario);
+	public CuentaSueldo(Cliente propietario, Banco banco) {
+		super(propietario, banco);
 		super.setTc(TipoCuenta.Cuenta_Sueldo);
 	}
 

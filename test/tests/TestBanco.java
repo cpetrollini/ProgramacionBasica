@@ -5,12 +5,13 @@ import static org.junit.Assert.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-import ar.edu.unlam.pb2.tpCuentaCorriente.Banco;
-import ar.edu.unlam.pb2.tpCuentaCorriente.Cliente;
-import ar.edu.unlam.pb2.tpCuentaCorriente.Cuenta;
-import ar.edu.unlam.pb2.tpCuentaCorriente.CuentaCajaAhorro;
-import ar.edu.unlam.pb2.tpCuentaCorriente.CuentaCorriente;
-import ar.edu.unlam.pb2.tpCuentaCorriente.CuentaSueldo;
+import ar.edu.unlam.pb2.tpBanco.Banco;
+import ar.edu.unlam.pb2.tpBanco.Cliente;
+import ar.edu.unlam.pb2.tpBanco.Cuenta;
+import ar.edu.unlam.pb2.tpBanco.CuentaCajaAhorro;
+import ar.edu.unlam.pb2.tpBanco.CuentaCorriente;
+import ar.edu.unlam.pb2.tpBanco.CuentaSueldo;
+import ar.edu.unlam.pb2.tpBanco.TipoCuenta;
 
 public class TestBanco {
 
@@ -22,40 +23,55 @@ public class TestBanco {
 		Double saldoCuentaCorriente = 20.0;
 		Double saldoCajaAhorro = 30.0;
 		Double saldoCuentaSueldo = 10.0;
-		
-		cuenta = new CuentaCorriente(1212, saldoCuentaCorriente, cliente,  150.0);
+
+		cuenta = new CuentaCorriente(cliente, banco); // cbu = 1
 		banco.agregarCuenta(cuenta);
-		cuenta = new CuentaCajaAhorro(1213, saldoCajaAhorro, cliente);
+		cuenta.depositarDinero(saldoCuentaCorriente);
+
+		cuenta = new CuentaCajaAhorro(cliente, banco); // cbu = 2
 		banco.agregarCuenta(cuenta);
-		cuenta = new CuentaSueldo(1214, saldoCuentaSueldo, cliente);
+		cuenta.depositarDinero(saldoCajaAhorro);
+
+		cuenta = new CuentaSueldo(cliente, banco); // cbu = 3
+		cuenta.depositarDinero(saldoCuentaSueldo);
 		banco.agregarCuenta(cuenta);
-		
-		Double saldoEncontradoCA = banco.consultarSaldoCuentaConMapeo(1213);
-		banco.consultarSaldoCuentaConMapeo(1214);
-		Double saldoEncontradoCC = banco.consultarSaldoCuentaConMapeo(1212);
-		assertEquals(saldoCuentaCorriente,saldoEncontradoCC);
+
+		Double saldoEncontradoCC = banco.consultarSaldoCuenta(1);
+		assertEquals(saldoCuentaCorriente, saldoEncontradoCC);
+		Double saldoEncontradoCA = banco.consultarSaldoCuenta(2);
 		assertEquals(saldoCajaAhorro, saldoEncontradoCA);
-		assertEquals(saldoCuentaSueldo, banco.consultarSaldoCuentaConMapeo(1214));
+		Double saldoEncontradoCS = banco.consultarSaldoCuenta(3);
+		assertEquals(saldoCuentaSueldo, saldoEncontradoCS);
 	}
 
-	@Test 
-	public void queSeAgregueUnaCuenta(){
+	@Test
+	public void queSeRegistreUnNuevoClienteYBuscarloPorDni() {
+		Banco banco = new Banco();
+		Cliente cliente = new Cliente("Martin", 42595790);
+		banco.registrarCliente("Martin", 42595790);
+		assertEquals(cliente, banco.buscarUnClientePorDni(42595790));
+	}
+
+	@Test
+	public void queSeAgregueUnaCuenta() {
 		Banco banco = new Banco();
 		Cliente cliente = new Cliente("mario", 42565898);
-		Cuenta cuenta = new CuentaCorriente(1212, 20.0,cliente, 150.0);
+		Cuenta cuenta = new CuentaCorriente(cliente, banco);
 		assertTrue(banco.agregarCuenta(cuenta));
 	}
-	
+
 	@Test
 	public void queSeTranfieraDeUnaCuentaAOtra() {
 		Banco banco = new Banco();
 		Cliente cliente = new Cliente("mario", 42565898);
-		Cuenta cuenta1 = new CuentaCorriente(1213, 20.0,cliente, 150.0);
-		Cuenta cuenta = new CuentaCorriente(1212, 20.0,cliente, 150.0);
+
+		Cuenta cuenta1 = new CuentaCorriente(cliente, banco);
+		cuenta1.depositarDinero(170.0);
+
+		Cuenta cuenta = new CuentaCorriente(cliente, banco);
+		cuenta.depositarDinero(20.0);
+
 		Double monto = 150.0;
-		banco.transferir(monto, cuenta1, cuenta);
-		
-		
-		
+		assertTrue(banco.transferir(monto, cuenta1, cuenta));
 	}
 }
