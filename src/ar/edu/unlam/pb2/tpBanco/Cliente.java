@@ -3,32 +3,26 @@ package ar.edu.unlam.pb2.tpBanco;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Cliente {
-	private String nombre;
-	private Integer dni;
+public class Cliente extends Persona{
+
+	private Boolean vip;
+	private Banco banco;
 	private Set <Cuenta> cuentas;
 	
 	public Cliente(String nombre, Integer dni) {
-		super();
+		super(nombre, dni);
 		this.cuentas = new HashSet<Cuenta>();
-		this.nombre = nombre;
-		this.dni = dni;
+		this.setNombre(nombre);
+		this.setDni(dni);
+		this.vip = verificarCategoriaVip();
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public Integer getDni() {
-		return dni;
-	}
-
-	public void setDni(Integer dni) {
-		this.dni = dni;
+	private Boolean verificarCategoriaVip() {
+		
+		for (Cuenta cuenta : cuentas) {
+			
+		}
+		return null;
 	}
 
 	public Set<Cuenta> getCuentas() {
@@ -37,6 +31,7 @@ public class Cliente {
 	
 	public void setCuenta(Cuenta cuentaAgregar) {
 		this.cuentas.add(cuentaAgregar);
+		super.getCuentas().add(cuentaAgregar);
 	}
 
 
@@ -44,7 +39,7 @@ public class Cliente {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dni == null) ? 0 : dni.hashCode());
+		result = prime * result + ((getDni() == null) ? 0 : getDni().hashCode());
 		return result;
 	}
 
@@ -57,10 +52,10 @@ public class Cliente {
 		if (getClass() != obj.getClass())
 			return false;
 		Cliente other = (Cliente) obj;
-		if (dni == null) {
-			if (other.dni != null)
+		if (getDni() == null) {
+			if (other.getDni() != null)
 				return false;
-		} else if (!dni.equals(other.dni))
+		} else if (!getDni().equals(other.getDni()))
 			return false;
 		return true;
 	}

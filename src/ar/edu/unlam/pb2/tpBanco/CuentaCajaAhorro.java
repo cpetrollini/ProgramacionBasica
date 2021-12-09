@@ -11,7 +11,7 @@ public class CuentaCajaAhorro extends Cuenta {
 
 	public CuentaCajaAhorro(Cliente propietario, Banco banco) {
 		super(propietario, banco);
-		// TODO Auto-generated constructor stub
+		super.setTc(TipoCuenta.Caja_Ahorro);
 	}
 
 	@Override

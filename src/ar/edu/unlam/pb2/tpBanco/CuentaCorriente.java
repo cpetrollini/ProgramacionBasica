@@ -16,6 +16,7 @@ public class CuentaCorriente extends Cuenta{
 	public CuentaCorriente(Cliente propietario, Banco banco) {
 		super(propietario, banco);
 		this.descubierto = 0.0;
+		super.setTc(TipoCuenta.Cuenta_Corriente);
 	}
 	
 	

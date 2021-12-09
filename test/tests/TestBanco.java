@@ -74,4 +74,22 @@ public class TestBanco {
 		Double monto = 150.0;
 		assertTrue(banco.transferir(monto, cuenta1, cuenta));
 	}
+	
+//	@Test
+//	public void queSeAsigneCategoriaVip(){
+//		Banco banco = new Banco();
+//		Integer dni = 42565898;
+//		Cliente cliente = new Cliente("mario", dni );
+//		
+//		Cuenta cuenta1 = new CuentaCorriente(cliente, banco);
+//		cuenta1.depositarDinero(5500000.0);
+//
+//		Cuenta cuenta2 = new CuentaCorriente(cliente, banco);
+//		cuenta.depositarDinero(4500000.0);
+//		
+//		banco.
+		
+
+	
+	
 }

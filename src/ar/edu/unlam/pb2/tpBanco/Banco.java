@@ -16,8 +16,9 @@ public class Banco {
 		this.clientes = new HashSet<Cliente>();
 	}
 
-	private void agregarCliente(Cliente cliente) {
-		this.clientes.add(cliente);
+	private void agregarCliente(Persona registrar) {
+		Cliente nuevo = new Cliente(registrar.getNombre(), registrar.getDni());
+		this.clientes.add(nuevo);
 	}
 
 	public Boolean consultarSiEsCliente(Cliente aVerificar) {
@@ -26,8 +27,38 @@ public class Banco {
 
 	public Boolean agregarCuenta(Cuenta cuenta) {
 		this.agregarCliente(cuenta.getCliente());
-//		cuenta.getCliente().setCuenta(cuenta);
+		cuenta.getCliente().setCuenta(cuenta);
 		return this.cuentas.add(cuenta);
+	}
+
+	public Boolean crearCuentaAUnCliente(Integer dni, TipoCuenta tipo) /*throws clienteNoExistenteException*/ {
+		Boolean exitoso = false;
+		Cliente cliente = this.buscarUnClientePorDni(dni);
+		Cuenta creada = this.crearCuenta(tipo, cliente);
+		if (creada != null) {
+			if (this.agregarCuenta(creada)) {
+				exitoso = true;
+			}
+		}
+		return exitoso;
+	}
+
+	private Cuenta crearCuenta(TipoCuenta tipo, Cliente cliente) {
+		Cuenta creada;
+		switch (tipo) {
+		case Cuenta_Sueldo:
+			creada = new CuentaSueldo(cliente, this);
+			break;
+		case Caja_Ahorro:
+			creada = new CuentaCajaAhorro(cliente, this);
+			break;
+		case Cuenta_Corriente:
+			creada = new CuentaCorriente(cliente, this);
+			break;
+		default:
+			creada = null;
+		}
+		return creada;
 	}
 
 	public Set<Cuenta> buscarCuentasDeUnClientePorDni(Integer dni) {
@@ -107,4 +138,5 @@ public class Banco {
 	public void setDescubiertoCuentaCorriente(Double descubiertoCuentaCorriente) {
 		this.descubiertoCuentaCorriente = descubiertoCuentaCorriente;
 	}
+
 }
