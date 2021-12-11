@@ -33,12 +33,16 @@ public class Banco {
 
 	public Boolean crearCuentaAUnCliente(Integer dni, TipoCuenta tipo) /*throws clienteNoExistenteException*/ {
 		Boolean exitoso = false;
+		try {
 		Cliente cliente = this.buscarUnClientePorDni(dni);
 		Cuenta creada = this.crearCuenta(tipo, cliente);
 		if (creada != null) {
 			if (this.agregarCuenta(creada)) {
 				exitoso = true;
 			}
+		}
+		}catch(NullPointerException e) {
+			throw new NullPointerException("El cliente no fue registrado");
 		}
 		return exitoso;
 	}

@@ -75,6 +75,18 @@ public class TestBanco {
 		assertTrue(banco.transferir(monto, cuenta1, cuenta));
 	}
 	
+	@Test
+	public void crearCuentaAUnCliente() {
+		Banco banco = new Banco();
+		Cliente cliente = new Cliente("mario", 42565898);
+		banco.registrarCliente(cliente.getNombre(), cliente.getDni());
+		assertTrue(banco.crearCuentaAUnCliente(cliente.getDni(), TipoCuenta.Caja_Ahorro));	
+	}
+	
+	@Test
+	public void queNoSeCreeUnaCuentaAUnClienteNoRegistrado() {
+		
+	}
 //	@Test
 //	public void queSeAsigneCategoriaVip(){
 //		Banco banco = new Banco();
